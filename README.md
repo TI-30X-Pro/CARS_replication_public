@@ -1,6 +1,6 @@
 # CARS replication
 
-Modern-Python replication of CARS, *Learning Responsibility-Attributed Adversarial Scenarios
+Python replication of CARS, *Learning Responsibility-Attributed Adversarial Scenarios
 for Testing Autonomous Vehicles* (Xiao et al. 2026,
 [arXiv:2605.13751](https://arxiv.org/abs/2605.13751)).
 
