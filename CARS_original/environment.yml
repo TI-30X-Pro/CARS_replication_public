@@ -1,0 +1,64 @@
+# Conda environment for CARS.
+# Usage:
+#   conda env create -f environment.yml
+#   conda activate cars
+#   pip install --no-deps l5kit kornia==0.6.4 shapely pyemd POT
+#   pip install --no-deps -e CTG -e trajdata -e Pplan
+#
+# Notes:
+#   - Targets Linux + NVIDIA (CUDA 11.3). For CPU-only or Apple Silicon,
+#     replace `cudatoolkit=11.3` with `cpuonly` and remove the `nvidia` channel.
+#   - The five `--no-deps` packages and the three local editable installs
+#     are intentional: their declared dependencies clash with the pinned
+#     numerical stack (numpy 1.21.5 / pandas 1.4.1 / matplotlib 3.5.0).
+
+name: cars
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.9
+
+  # PyTorch + CUDA
+  - pytorch=1.11.0
+  - torchvision=0.12.0
+  - torchaudio=0.11.0
+  - cudatoolkit=11.3
+
+  # Numerical / scientific stack — conda solves all compatibility upfront so
+  # numpy / pandas / matplotlib are never silently upgraded by later packages.
+  - numpy=1.21.5
+  - pandas=1.4.1
+  - matplotlib=3.5.0
+  - scipy
+  - scikit-learn=1.2.2
+  - numba=0.56.4
+  - pyarrow
+  - seaborn
+  - imageio
+  - zarr
+  - dill
+  - prettytable
+
+  # System libs
+  - ffmpeg
+
+  # Pure-Python packages installed via pip (deps auto-resolved)
+  - pip
+  - pip:
+    - tianshou
+    - pytorch-lightning==2.0
+    - torchmetrics==0.11.1
+    - torchtext
+    - wandb
+    - protobuf==3.20.1
+    - transforms3d
+    - einops==0.6.0
+    - casadi
+    - pymap3d
+    - nuscenes-devkit==1.1.9
+    - opencv-python
+    - huggingface_hub

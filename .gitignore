@@ -1,0 +1,17 @@
+__pycache__/
+*.pyc
+*.egg-info/
+.ipynb_checkpoints/
+.DS_Store
+
+# nuScenes and anything derived from it, weights, run outputs
+/data/
+/checkpoints/
+/runs/
+*.ckpt
+*.pt
+*.h5
+*.hdf5
+*.npz
+/logs/
+/work/

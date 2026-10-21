@@ -1,0 +1,22 @@
+# Replication dependencies for Python >= 3.11. Installed by infra/install_cars.sh, which also
+# adds nuscenes-devkit.
+numpy>=2
+torch>=2.3
+torchvision
+scipy
+pandas
+scikit-learn
+h5py
+pyarrow
+shapely
+pyquaternion
+pyyaml
+tqdm
+pytest
+huggingface_hub
+# what nuscenes-devkit needs for the parts we use (scene splits, map API)
+matplotlib>=3.6
+descartes
+opencv-python-headless
+Pillow
+cachetools

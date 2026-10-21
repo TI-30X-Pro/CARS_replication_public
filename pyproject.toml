@@ -1,0 +1,26 @@
+[project]
+name = "cars"
+version = "0.1.0"
+description = "Rebuild of CARS (Xiao et al. 2026)"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=2",
+    "torch>=2.3",
+    "torchvision",
+    "scipy",
+    "pandas",
+    "scikit-learn",
+    "h5py",
+    "pyyaml",
+    "tqdm",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["cars*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

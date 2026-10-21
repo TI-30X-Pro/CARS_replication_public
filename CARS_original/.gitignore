@@ -1,0 +1,41 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+build/
+dist/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
+
+# Model checkpoints (distributed via Hugging Face Hub)
+*.ckpt
+*.pth
+
+# Normalization stats (.pt) — ignored by default,
+# whitelist the small files that must ship with the repo
+*.pt
+!round_norm_info_dt01.pt
+!ad4che_norm_info_dt01.pt
+
+# Training / experiment outputs
+GMM_Training/
+GMM_Results/
+wandb/
+events.out.tfevents.*
+**/logs/log.txt
+
+# Trajdata cache (large, auto-built on first rollout)
+cld_cache/
+*_cache/
+
+# Claude / dev tooling
+.claude/
+.codex
+.devcontainer/
+
+# Env vars
+.env

@@ -1,0 +1,55 @@
+{
+    "results_dir": "GMM_Results",
+    "name": "RounD-generalization",
+    "dataset_path": "../rounD/rounD",
+    "eval_class": "PPO_Diffuser",
+    "seed": 42,
+    "num_scenes_per_batch": 1,
+    "save_action_samples": true,
+    "num_episode_repeats": 1,
+    "use_logger": false,
+    "policy": {
+        "num_action_samples": 8
+    },
+    "scene_offset": 0,
+    "trajdata": {
+        "trajdata_cache_location": "../cld_cache",
+        "trajdata_data_dirs": {
+            "nusc_trainval": "../nuscenes",
+            "nusc_test": "../nuscenes",
+            "nusc_mini": "../nuscenes",
+            "round": "../rounD/rounD"
+        },
+        "trajdata_source_train": [
+            "round-train"
+        ],
+        "trajdata_source_test": [
+            "round-train"
+        ],
+        "trajdata_rebuild_cache": false,
+        "num_sim_per_scene": 1,
+        "future_sec": 2.0,
+        "history_sec": 2.0,
+        "num_simulation_steps": 75,
+        "n_step_action": 5,
+        "decisioin_tree_visualization": false,
+        "ego_only": false,
+        "eval_scenes": [0, 1, 2, 3, 4, 5]
+    },
+    "ckpt": {
+        "policy": {
+            "ckpt_dir": "checkpoints/",
+            "ckpt_key": "g8.ckpt"
+        },
+        "planner": {
+            "ckpt_dir": "checkpoints/",
+            "ckpt_key": "cars_adversary.ckpt"
+        },
+        "predictor": {
+            "ckpt_dir": "checkpoints/",
+            "ckpt_key": "g8.ckpt"
+        }
+    },
+    "critic": null,
+    "registered_name": "visier"
+}
