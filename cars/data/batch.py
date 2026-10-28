@@ -373,9 +373,35 @@ def _lyft_types(t):
     return t
 
 
+def pad_neighbors(batch):
+    """tbsim's maybe_pad_neighbor, in place.
+
+    No agent in the batch has a neighbour (all > 50 m apart): add one fully masked slot, so
+    the model's neighbour tensors are never empty. Otherwise front-pad neighbour histories
+    to the agent's history length. neigh_indices gets -1 in the dummy slot (tbsim leaves it
+    empty) so every neighbour tensor has the same width.
+    """
+    b, n, t, d = batch["neigh_hist"].shape
+    hist_len, fut_len = batch["agent_hist"].shape[1], batch["agent_fut"].shape[1]
+    e = batch["neigh_hist_extents"].shape[-1]
+    if n == 0:
+        batch["neigh_hist"] = torch.full((b, 1, hist_len, d), float("nan"))
+        batch["neigh_fut"] = torch.full((b, 1, fut_len, d), float("nan"))
+        batch["neigh_types"] = torch.zeros(b, 1)
+        batch["neigh_indices"] = torch.full((b, 1), -1.0)
+        batch["neigh_hist_extents"] = torch.zeros(b, 1, hist_len, e)
+        batch["neigh_fut_extents"] = torch.zeros(b, 1, fut_len, e)
+    elif t < hist_len:
+        batch["neigh_hist"] = torch.cat([torch.full((b, n, hist_len - t, d), float("nan")),
+                                         batch["neigh_hist"]], dim=2)
+        batch["neigh_hist_extents"] = torch.cat([torch.zeros(b, n, hist_len - t, e),
+                                                 batch["neigh_hist_extents"]], dim=2)
+
+
 def parse(batch, cfg=EncodingConfig()):
     """tbsim's parse_trajdata_batch for agent-centric batches."""
     batch = dict(batch)
+    pad_neighbors(batch)
     fut_pos, fut_yaw, _, fut_mask = pos_yaw_speed(batch["agent_fut"])
     hist_pos, hist_yaw, hist_speed, hist_mask = pos_yaw_speed(batch["agent_hist"])
     last = batch["agent_hist"][..., -1, :]

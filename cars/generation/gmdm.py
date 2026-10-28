@@ -195,7 +195,8 @@ class GMDM(nn.Module):
         if "target_idx" in batch:   # the adversary sees which neighbour is its target
             is_target = batch["neigh_indices"].long() == batch["target_idx"].long().unsqueeze(1)
             valid = is_target.sum(dim=1) == 1
-            role[valid] = is_target[valid].long()
+            if valid.any():
+                role[valid] = is_target[valid].long()
         center = self.agents_mha(center, neigh + self.neigh_role_emb(role), neigh_mask)
         sg = batch["map_is_singapore"].to(device).long()
         city = torch.stack([1 - sg, sg], dim=1).float()
